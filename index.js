@@ -43,7 +43,7 @@ const QAers = [
     }
 ];
 
-const rando = Math.floor(Math.random() * developers.length);
+const rando = Math.floor(Math.random() * QAers.length);
 
 
 app.post('/qa', (req, res) => {
