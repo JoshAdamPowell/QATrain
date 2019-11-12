@@ -12,21 +12,48 @@ app.get('/helloWorld', (req, res) => {
     res.send('Hello world!');
 })
 
-const developers = [
-    "Josh",
-    "Robin",
-    "Nathan"
+const QAers = [
+    {
+        name: "Josh",
+        id: "UG3AZUDR9"
+    },
+    {
+        name: "Robin",
+        id: "UNZJ1235L"
+    },
+    {
+        name: "Nathan",
+        id: "UPB3V5EN7"
+    },
+    {
+        name: "Ray",
+        id: "UF87QFDAL"
+    },
+    {
+        name: "Esam",
+        id: "UF8BM027K"
+    },
+    {
+        name: "Konrad",
+        id: "UN6RMRXB3"
+    },
+    {
+        name: "Thomas",
+        id: "U2XH996F3"
+    }
 ];
+
 const rando = Math.floor(Math.random() * developers.length);
 
 
 app.post('/qa', (req, res) => {
     console.log(req.body);
-
+    console.log(req.body.user_id)
     const response = {
         response_type: "in_channel",
-        text: `${developers[rando]} is the guy for you`
+        text: `<@${QAers[0].id}> is the guy for you, also ${req.body.user_id}`
     };
+    console.log(response);
     res.send(response);
     //axios.post(req.body.response_url, {text: `${developers[rando]} is the guy for you`})
 
