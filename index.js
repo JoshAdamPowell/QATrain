@@ -48,21 +48,19 @@ const rando = Math.floor(Math.random() * QAers.length);
 
 
 app.post('/qa', (req, res) => {
-    console.log(req.body);
-    console.log(req.body.user_id)
 
     const sendingUserId = req.body.user_id;
-    const josh = QAers[0];
-    const message = josh.id === sendingUserId ? 'You are Josh!': "you arent josh"
+    const filteredQa = QAers.filter(q => q.id !== sendingUserId);
+    const randomNumber = Math.random(filteredQa.length);
+    const Qaer = QAers[randomNumber];
     const response = {
         response_type: "in_channel",
-        text: `<@${QAers[0].id}> is the guy for you, also query: ${message} body: ${JSON.stringify(req.body)}`
+        text: `<@${Qaer}> is the guy for you!}`
     };
     console.log(response);
     res.send(response);
     //axios.post(req.body.response_url, {text: `${developers[rando]} is the guy for you`})
 
 })
-
 
 app.listen(PORT, () => console.log(`listening on port ${PORT}`))
