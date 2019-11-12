@@ -21,8 +21,12 @@ const rando = Math.floor(Math.random() * developers.length);
 
 app.post('/qa', (req, res) => {
     console.log(req.body);
-    res.sendStatus(200);
-    axios.post(req.body.response_url, {text: `${developers[rando]} is the guy for you`})
+
+    const response = {
+        text: `${developers[rando]} is the guy for you`
+    };
+    res.send(response);
+    //axios.post(req.body.response_url, {text: `${developers[rando]} is the guy for you`})
 
 })
 
