@@ -50,9 +50,13 @@ const rando = Math.floor(Math.random() * QAers.length);
 app.post('/qa', (req, res) => {
     console.log(req.body);
     console.log(req.body.user_id)
+
+    const sendingUserId = req.body.user_id;
+    const josh = QAers[0];
+    const message = josh.id === sendingUserId ? 'You are Josh!': "you arent josh"
     const response = {
         response_type: "in_channel",
-        text: `<@${QAers[0].id}> is the guy for you, also query: ${JSON.stringify(req.query)} body: ${JSON.stringify(req.body)}`
+        text: `<@${QAers[0].id}> is the guy for you, also query: ${message} body: ${JSON.stringify(req.body)}`
     };
     console.log(response);
     res.send(response);
