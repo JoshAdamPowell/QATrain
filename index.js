@@ -24,6 +24,7 @@ app.post('/qa', (req, res) => {
     console.log(req.body);
 
     const response = {
+        response_type: "in_channel",
         text: `${developers[rando]} is the guy for you`
     };
     res.send(response);
