@@ -51,7 +51,7 @@ app.post('/qa', (req, res) => {
     console.log(req.body.user_id)
     const response = {
         response_type: "in_channel",
-        text: `<@${QAers[0].id}> is the guy for you, also ${req.body}`
+        text: `<@${QAers[0].id}> is the guy for you, also ${JSON.stringify(req.body)}`
     };
     console.log(response);
     res.send(response);
