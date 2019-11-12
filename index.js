@@ -6,6 +6,7 @@ import bodyParser from 'body-parser';
 const app = express();
 const PORT = process.env.PORT || 5000
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/helloWorld', (req, res) => {
     console.log('hello');
@@ -51,7 +52,7 @@ app.post('/qa', (req, res) => {
     console.log(req.body.user_id)
     const response = {
         response_type: "in_channel",
-        text: `<@${QAers[0].id}> is the guy for you, also ${JSON.stringify(req.query)}`
+        text: `<@${QAers[0].id}> is the guy for you, also query: ${JSON.stringify(req.query)} body: ${JSON.stringify(req.body)}`
     };
     console.log(response);
     res.send(response);
