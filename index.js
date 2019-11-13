@@ -111,7 +111,6 @@ app.post('/qa', (req, res) => {
 app.post('/standup', (req, res) => {
     const dayOfWeek = new Date().getDay();
     const isItFridayOrMonday = dayOfWeek === 1 || dayOfWeek === 5;
-    const isItFridayOrMonday = true;
     const standupers = people.filter(p => !isItFridayOrMonday || !p.isSoftwire)
     const randomNumber = Math.floor(Math.random() * standupers.length);
     const standuper = standupers[randomNumber];
