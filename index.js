@@ -92,7 +92,10 @@ const rando = Math.floor(Math.random() * people.length);
 
 
 app.post('/qa', (req, res) => {
-    const text = req.body.text.toLower();
+    let text;
+    if (req.body.text){
+        text = req.body.text.toLower()
+    };
     const sendingUserId = req.body.user_id;
     const filteredQa = people.filter(q => q.id !== sendingUserId && q.isQaer && !text.includes(q.name.toLower()));
     const randomNumber = Math.floor(Math.random() * filteredQa.length);
