@@ -116,7 +116,7 @@ app.post('/standup', (req, res) => {
     const standuper = standupers[randomNumber];
     const userId = `<@${standuper.id}>`;
     const randomMessage = standupMessages[Math.floor(Math.random() * standupMessages.length)];
-    const updatedMessage = randomMessage.replace('@@@', userId) + standuper.name;
+    const updatedMessage = randomMessage.replace('@@@', userId);
     const response = {
         response_type: "in_channel",
         text: updatedMessage
