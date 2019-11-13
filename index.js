@@ -94,15 +94,15 @@ const rando = Math.floor(Math.random() * people.length);
 app.post('/qa', (req, res) => {
     let text = "";
     if (req.body.text){
-        text = req.body.text.toLower()
+        text = req.body.text.toLowerCase()
     };
     const sendingUserId = req.body.user_id;
-    const filteredQa = people.filter(q => q.id !== sendingUserId && q.isQaer);
+    const filteredQa = people.filter(q => q.id !== sendingUserId && q.isQaer && !text.includes(q.name.toLowerCase()));
     const randomNumber = Math.floor(Math.random() * filteredQa.length);
     const randomMessage = messages[Math.floor(Math.random() * messages.length)];
     const Qaer = filteredQa[randomNumber];
     const userId = `<@${Qaer.id}>`;
-    const updatedMessage = randomMessage.replace('@@@', userId)
+    const updatedMessage = randomMessage.replace('@@@', userId);
     const response = {
         response_type: "in_channel",
         text: updatedMessage
