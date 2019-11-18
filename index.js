@@ -66,6 +66,13 @@ const people = [
         id: "U8U9U7588",
         isQaer: false,
         isSoftwire: false
+    },
+    {
+        name: "Joe",
+        id: "UDXJTAZNF",
+        isQaer: true,
+        isSoftwire: true
+
     }
 ];
 
