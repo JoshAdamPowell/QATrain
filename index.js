@@ -4,7 +4,6 @@ import people from './people';
 import messages from './QAmessages';
 import standupMessages from './standupMessages';
 
-
 const app = express();
 const PORT = process.env.PORT || 5000
 app.use(bodyParser.json());
@@ -32,10 +31,7 @@ app.get('/helloWorld', (req, res) => {
 })
 
 app.post('/qa', (req, res) => {
-    let text = "";
-    if (req.body.text){
-        text = req.body.text.toLowerCase()
-    };
+    const text = req.body.text ? req.body.text.toLowerCase() : ""
     const sendingUserId = req.body.user_id;
     const filteredQa = people.filter(q => q.id !== sendingUserId && q.isQaer && !text.includes(q.name.toLowerCase()));
     const message = getMessage(messages, filteredQa)
@@ -49,10 +45,11 @@ app.post('/qa', (req, res) => {
 })
 
 app.post('/standup', (req, res) => {
+    const text = req.body.text ? req.body.text.toLowerCase() : ""
     const dayOfWeek = new Date().getDay();
     const isItFridayOrMonday = dayOfWeek === 1 || dayOfWeek === 5;
-    const standupers = people.filter(p => !isItFridayOrMonday || !p.isSoftwire)
-    const message = getMessage(standupMessages, standupers)
+    const standupers = people.filter(p => !(isItFridayOrMonday && p.isSoftwire) && !text.includes(p.name.toLowerCase()))
+    const message = getMessage(standupMessages, standupers);
 
     const response = {
         response_type: "in_channel",
