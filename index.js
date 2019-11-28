@@ -59,5 +59,19 @@ app.post('/standup', (req, res) => {
 })
 
 
+app.post('/debug', (req, res) => {
+    const text = req.body.text ? req.body.text.toLowerCase() : ""
+    const dayOfWeek = new Date().getDay();
+    const isItFridayOrMonday = dayOfWeek === 1 || dayOfWeek === 5;
+    const standupers = people.filter(p => !(isItFridayOrMonday && p.isSoftwire) && !text.includes(p.name.toLowerCase()))
+    const randomPerson = getRandomEntryFromList(standupers);
+
+    const response = {
+        response_type: "in_channel",
+        text: randomPerson.name
+    };
+    res.send(response);
+})
+
 
 app.listen(PORT, () => console.log(`listening on port ${PORT}`))
