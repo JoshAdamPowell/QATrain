@@ -74,9 +74,7 @@ app.post('/qa', (req, res) => {
                 if (p.id === qaEr.id){
                     client.query('UPDATE Developers SET QAScore = 0 WHERE id = $1', [qaEr.id])
                 } else {
-                client.query('SELECT qascore FROM Developers WHERE id = $1', [p.id]).then((score) => {
-                    client.query('UPDATE Developers SET QAScore = $1 WHERE id = $2', [score.rows[0].qascore + 1, p.id])
-                })
+                    client.query('UPDATE Developers SET QAScore = $1 WHERE id = $2', [p.qascore + 1, p.id])
             }
         })
     })
@@ -87,14 +85,34 @@ app.post('/standup', (req, res) => {
     const text = req.body.text ? req.body.text.toLowerCase() : ""
     const dayOfWeek = new Date().getDay();
     const isItFridayOrMonday = dayOfWeek === 1 || dayOfWeek === 5;
-    const standupers = people.filter(p => !(isItFridayOrMonday && p.isSoftwire) && !text.includes(p.name.toLowerCase()))
-    const message = getMessage(standupMessages, standupers);
+    const query = isItFridayOrMonday ? 'WHERE issoftwire = FALSE' : '';
 
-    const response = {
-        response_type: "in_channel",
-        text: message
-    };
-    res.send(response);
+    client.query(`SELECT * FROM Developers ${query}`).then(results => {
+        const toQA = results.rows.filter(person => !text.includes(person.name.toLowerCase()));
+        const actualList = [];
+        toQA.forEach(q => {
+            for(let i = q.standupscore; i > 0; i--){
+                actualList.push(q.id);
+            }
+        })
+        console.log(actualList);
+        const idToQa = getRandomEntryFromList(actualList)
+        const qaEr = toQA.filter(p => p.id === idToQa)[0];
+        const randomMessage = getRandomEntryFromList(standupMessages)
+        const message = replaceMessage(randomMessage, qaEr);
+        const response = {
+            response_type: "in_channel",
+            text: message
+        };
+        res.send(response);
+            toQA.forEach(p => {
+                if (p.id === qaEr.id){
+                    client.query('UPDATE Developers SET standupscore = 0 WHERE id = $1', [qaEr.id])
+                } else {
+                    client.query('UPDATE Developers SET standupscore = $1 WHERE id = $2', [p.standupscore + 1, p.id])
+            }
+        })
+    })
 })
 
 
