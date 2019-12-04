@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 const client = new Client({
-    connectionString: "postgres://xxpqrobaawtdns:7c8af17a9db251bd391248d66645b56a87c9bfc402010ab048dbe34e9131c057@ec2-54-217-219-235.eu-west-1.compute.amazonaws.com:5432/ddpk3pc3aisfrj",
+    connectionString: process.env.DATABASE_URL,
     ssl: true,
   });
   
