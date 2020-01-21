@@ -27,7 +27,7 @@ client.query(`SELECT * FROM Developers ${query}`).then(results => {
     })
     const idToQa = getRandomEntryFromList(actualList)
     const qaEr = toQA.filter(p => p.id === idToQa)[0];
-    const randomMessage = getRandomEntryFromList(standupMessages)
+    const randomMessage = 'Picking someone for standup... It\'s: @@@'; 
     const message = replaceMessage(randomMessage, qaEr);
     const response = {
         channel: "C9P7QQEH0",
@@ -46,10 +46,7 @@ client.query(`SELECT * FROM Developers ${query}`).then(results => {
         headers: {
             Authorization: `Bearer ${process.env.SLACK_KEY}`,
         },
-        data: {
-            channel: "C9P7QQEH0",
-            text: "Time to pick someone for standup!"
-        }
+        data: response
     })
 })
 
