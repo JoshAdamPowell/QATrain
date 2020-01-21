@@ -44,7 +44,7 @@ client.query(`SELECT * FROM Developers ${query}`).then(results => {
         method: 'post',
         url: 'https://slack.com/api/chat.postMessage',
         headers: {
-            Authorization: "Bearer xoxp-99552704240-547373965859-831463387632-b5c585991485b373ac98eda5a7858b2f",
+            Authorization: `Bearer ${process.env.SLACK_KEY}`,
         },
         data: {
             channel: "C9P7QQEH0",
