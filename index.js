@@ -115,7 +115,6 @@ app.post('/standup', (req, res) => {
     })
 })
 
-
 app.post('/debug', (req, res) => {
     const text = req.body.text ? req.body.text.toLowerCase() : ""
     const dayOfWeek = new Date().getDay();

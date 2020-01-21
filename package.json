@@ -18,6 +18,7 @@
     "pg-promise": "^10.3.1"
   },
   "scripts": {
-    "start": "nodemon index.js --exec babel-node --presets babel-preset-env"
+    "start": "nodemon index.js --exec babel-node --presets babel-preset-env",
+    "standup": "nodemon cron.js --exec babel-node --presets babel-preset-env"
   }
 }
