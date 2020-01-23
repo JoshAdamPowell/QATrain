@@ -20,7 +20,7 @@ const query = isItFridayOrMonday ? 'WHERE issoftwire = FALSE' : '';
 
 client.query(`SELECT * FROM Developers ${query}`).then(results => {
     const actualList = [];
-    results.forEach(q => {
+    results.rows.forEach(q => {
         for(let i = q.standupscore; i > 0; i--){
             actualList.push(q.id);
         }
