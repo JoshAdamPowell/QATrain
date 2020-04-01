@@ -18,16 +18,6 @@ const client = new Client({
   
   client.connect();
 
-
-app.get('/dbTest', (req, res) => {
-
-    client.query('SELECT * FROM Developers WHERE id = 2').then(x => {
-        console.log(x);
-        
-        res.send(x)})
-})
-
-
 const getRandomEntryFromList = (arr) => {
     const randomNumber = Math.floor(Math.random() * arr.length);
     return arr[randomNumber];
@@ -36,12 +26,6 @@ const getRandomEntryFromList = (arr) => {
 const replaceMessage = (message, person) => {
     const userId = `<@${person.slackid}>`;
     return message.replace('@@@', userId);
-}
-
-const getMessage = (messages, people) => {
-    const randomMessage = getRandomEntryFromList(messages)
-    const randomPerson = getRandomEntryFromList(people);
-    return replaceMessage(randomMessage, randomPerson);
 }
 
 app.get('/helloWorld', (req, res) => {
@@ -114,20 +98,5 @@ app.post('/standup', (req, res) => {
         })
     })
 })
-
-app.post('/debug', (req, res) => {
-    const text = req.body.text ? req.body.text.toLowerCase() : ""
-    const dayOfWeek = new Date().getDay();
-    const isItFridayOrMonday = dayOfWeek === 1 || dayOfWeek === 5;
-    const standupers = people.filter(p => !(isItFridayOrMonday && p.isSoftwire) && !text.includes(p.name.toLowerCase()))
-    const randomPerson = getRandomEntryFromList(standupers);
-
-    const response = {
-        response_type: "in_channel",
-        text: randomPerson.name
-    };
-    res.send(response);
-})
-
 
 app.listen(PORT, () => console.log(`listening on port ${PORT}`))
