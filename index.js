@@ -1,6 +1,5 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import people from './people';
 import messages from './QAmessages';
 import standupMessages from './standupMessages';
 import { Client } from 'pg'
